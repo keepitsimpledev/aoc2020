@@ -9,5 +9,5 @@ def get_lines(filename):
     return None
 
 
-def assert_with_message(condition, expected, actual):
-    assert condition, '\n\texpected: {}\n\tactual: {}'.format(expected, actual)
+def assert_with_message(expected, actual):
+    assert expected == actual, '\n\texpected: {}\n\tactual: {}'.format(expected, actual)

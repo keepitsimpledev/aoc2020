@@ -34,5 +34,5 @@ class TestStringMethods(unittest.TestCase):
                       '#.##...#...',
                       '#...##....#',
                       '.#..#...#.#']
-        assert_with_message(count_trees(test_input, 3) == 7, 7, count_trees(test_input, 3))
+        assert_with_message(7, count_trees(test_input, 3))
         part1()

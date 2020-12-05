@@ -48,8 +48,8 @@ class TestStringMethods(unittest.TestCase):
                       '#.##...#...',
                       '#...##....#',
                       '.#..#...#.#']
-        assert_with_message(count_trees(test_input, 3) == 7, 7, count_trees(test_input, 3))
-        assert_with_message(combine_paths(test_input) == 336, 336, combine_paths(test_input))
+        assert_with_message(7, count_trees(test_input, 3))
+        assert_with_message(336, combine_paths(test_input))
         map_lines = get_lines('day3.input')
-        assert_with_message(count_trees(map_lines, 3) == 211, 211, count_trees(map_lines, 3))
+        assert_with_message(211, count_trees(map_lines, 3))
         part2()

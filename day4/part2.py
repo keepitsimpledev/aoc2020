@@ -88,14 +88,12 @@ class TestStringMethods(unittest.TestCase):
                       '',
                       'hcl:#cfa07d eyr:2025 pid:166559648',
                       'iyr:2011 ecl:brn hgt:59in']
-        assert_with_message(
-            parse_entry_line(test_input[0]) == {'ecl': 'gry', 'pid': '860033327', 'eyr': '2020', 'hcl': '#fffffd'},
-            {'ecl': 'gry', 'pid': '860033327', 'eyr': '2020', 'hcl': '#fffffd'},
-            parse_entry_line(test_input[0]))
+        assert_with_message({'ecl': 'gry', 'pid': '860033327', 'eyr': '2020', 'hcl': '#fffffd'},
+                            parse_entry_line(test_input[0]))
         assert parse_entry_line(test_input[1]) == {'byr': '1937', 'iyr': '2017', 'cid': '147', 'hgt': '183cm'}
         assert parse_entry_line(test_input[2]) is None
-        assert_with_message(parse_entry_line(test_input[7]) == {'eyr': '2024'}, {'eyr': '2024'}, parse_entry_line(test_input[7]))
-        assert_with_message(len(parse_passport_entries(test_input)) == 4, 4, len(parse_passport_entries(test_input)))
+        assert_with_message({'eyr': '2024'}, parse_entry_line(test_input[7]))
+        assert_with_message(4, len(parse_passport_entries(test_input)))
         assert parse_passport_entries(test_input)[0] == {'ecl': 'gry', 'pid': '860033327', 'eyr': '2020',
                                                          'hcl': '#fffffd', 'byr': '1937', 'iyr': '2017', 'cid': '147',
                                                          'hgt': '183cm'}

@@ -59,9 +59,9 @@ def part2():
 
 
 def assert_row_column_seatid(code: str, row, column, seat_id):
-    assert_with_message(calculate_row(code) == row, row, calculate_row(code))
-    assert_with_message(calculate_column(code) == column, column, calculate_row(code))
-    assert_with_message(calculate_seat_id(code) == seat_id, seat_id, calculate_seat_id(code))
+    assert_with_message(row, calculate_row(code))
+    assert_with_message(column, calculate_column(code))
+    assert_with_message(seat_id, calculate_seat_id(code))
 
 
 class TestStringMethods(unittest.TestCase):

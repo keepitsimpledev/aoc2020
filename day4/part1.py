@@ -67,8 +67,8 @@ class TestStringMethods(unittest.TestCase):
         assert parse_entry_line(test_input[0]) == ['ecl', 'pid', 'eyr', 'hcl']
         assert parse_entry_line(test_input[1]) == ['byr', 'iyr', 'cid', 'hgt']
         assert parse_entry_line(test_input[2]) is None
-        assert_with_message(parse_entry_line(test_input[7]) == ['eyr'], ['eyr'], parse_entry_line(test_input[7]))
-        assert_with_message(len(parse_passport_entries(test_input)) == 4, 4, len(parse_passport_entries(test_input)))
+        assert_with_message(['eyr'], parse_entry_line(test_input[7]))
+        assert_with_message(4, len(parse_passport_entries(test_input)))
         assert parse_passport_entries(test_input)[0] == ['ecl', 'pid', 'eyr', 'hcl', 'byr', 'iyr', 'cid', 'hgt']
         assert parse_passport_entries(test_input)[1] == ['iyr', 'ecl', 'cid', 'eyr', 'pid', 'hcl', 'byr']
         assert parse_passport_entries(test_input)[2] == ['hcl', 'iyr', 'eyr', 'ecl', 'pid', 'byr', 'hgt']
