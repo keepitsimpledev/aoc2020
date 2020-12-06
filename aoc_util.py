@@ -5,7 +5,7 @@ __2020cookie\
     = 'session=53616c7465645f5f219f321fd9f4d85a83f65067516bfabc5cc2159fb9b01640da4e6955487e8e404ea2fe31dc063b2e'
 
 
-@DeprecationWarning('directly get input with get_input(day: int) instead')
+@DeprecationWarning
 def get_lines(filename):
     with open(filename, 'r', newline='\n') as inputfile:
         lines = inputfile.readlines()
