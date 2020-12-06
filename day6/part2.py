@@ -2,6 +2,7 @@ import unittest
 
 from aoc_util import get_lines
 from aoc_util import assert_with_message
+from aoc_util import get_input
 
 
 def get_total(lines):
@@ -18,12 +19,6 @@ def get_total(lines):
                 i = i + 1
             results = results + [len(setcurrent)]
             current = []
-    setcurrent = current[0]
-    i = 1
-    while i < len(current):
-        setcurrent = set(setcurrent).intersection(set(current[i]))
-        i = i + 1
-    results = results + [len(setcurrent)]
     total = 0
     for i in range(len(results)):
         total = total + results[i]
@@ -51,6 +46,9 @@ class TestStringMethods(unittest.TestCase):
                       'a',
                       'a',
                       '',
-                      'b']
+                      'b',
+                      '']
         assert_with_message(6, get_total(test_input))
+        assert_with_message(3435, get_total(get_lines('day6.input') + ['']))
+        assert_with_message(3435, get_total(get_input(6)))
         part2()

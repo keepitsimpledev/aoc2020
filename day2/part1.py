@@ -21,14 +21,14 @@ def is_valid(policy_and_pass_string):
     assert_with_message(4, len(min_max_letter_pass))
     counter = Counter(min_max_letter_pass[3])
     count = counter[min_max_letter_pass[2]]
-    return count >= min_max_letter_pass[0] and count <= min_max_letter_pass[1]
+    return min_max_letter_pass[0] <= count <= min_max_letter_pass[1]
 
 
 def part1():
     entries = get_lines('day2.input')
     num_valid = 0;
     for entry in entries:
-        if (is_valid(entry)):
+        if is_valid(entry):
             num_valid = num_valid + 1
     print('number of valid passes: {}'.format(num_valid))
 

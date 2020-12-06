@@ -2,11 +2,6 @@ import unittest
 
 from aoc_util import get_lines
 
-# doesn't work because of authentication
-# def get_input():
-#     url = 'https://adventofcode.com/2020/day/1/input'
-#     return requests.get(url, allow_redirects=True)
-
 
 def get_addends_of_2020(numbers):
     anchor_index = 0

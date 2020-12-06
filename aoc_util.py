@@ -1,4 +1,11 @@
+import requests
 
+
+__2020cookie\
+    = 'session=53616c7465645f5f219f321fd9f4d85a83f65067516bfabc5cc2159fb9b01640da4e6955487e8e404ea2fe31dc063b2e'
+
+
+@DeprecationWarning('directly get input with get_input(day: int) instead')
 def get_lines(filename):
     with open(filename, 'r', newline='\n') as inputfile:
         lines = inputfile.readlines()
@@ -11,3 +18,9 @@ def get_lines(filename):
 
 def assert_with_message(expected, actual):
     assert expected == actual, '\n\texpected: {}\n\tactual: {}'.format(expected, actual)
+
+
+def get_input(day: int):
+    url = 'https://adventofcode.com/2020/day/{}/input'.format(day)
+    response = requests.get(url, headers={'Cookie': __2020cookie})
+    return response.content.decode().split('\n')

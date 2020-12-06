@@ -2,6 +2,7 @@ import unittest
 
 from aoc_util import get_lines
 from aoc_util import assert_with_message
+from aoc_util import get_input
 
 
 def get_total(lines):
@@ -45,4 +46,6 @@ class TestStringMethods(unittest.TestCase):
                       '',
                       'b']
         assert_with_message(11, get_total(test_input))
+        assert_with_message(6714, get_total(get_lines('day6.input')))
+        assert_with_message(6714, get_total(get_input(6)))
         part1()
