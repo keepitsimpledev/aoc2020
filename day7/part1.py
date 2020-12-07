@@ -44,6 +44,29 @@ def get_containing_to_contained_bags_map(rules):
     return containing_to_contained_bags_map
 
 
+def can_contain_bag(bag, containing_bag, bags_map):
+    if bags_map.__contains__(containing_bag):
+        contained_bags = bags_map[containing_bag]
+        if contained_bags is None:
+            return False
+        else:
+            for contained_bag in contained_bags.keys():
+                if contained_bag == bag:
+                    return True
+                else:
+                    return can_contain_bag(bag, contained_bag, bags_map)
+    return False
+
+
+def get_num_containing_bags(bag, rules):
+    containing_to_contained_bags_map = get_containing_to_contained_bags_map(rules)
+    containing_bags = []
+    for contained_bag in containing_to_contained_bags_map.keys():
+        if can_contain_bag(bag, contained_bag, containing_to_contained_bags_map):
+            containing_bags += [contained_bag]
+    return len(containing_bags)
+
+
 def run():
     print()
 
@@ -60,4 +83,20 @@ class TestStringMethods(unittest.TestCase):
         assert_with_message(None, get_contained_bags(test_line_with_none))
         assert_with_message({'light red': {'bright white': 1, 'muted yellow': 2}, 'dotted black': None},
                             get_containing_to_contained_bags_map([test_line, test_line_with_none]))
+        containing_to_contained_bags_map = get_containing_to_contained_bags_map([test_line, test_line_with_none])
+        assert_with_message(True, can_contain_bag('bright white', 'light red', containing_to_contained_bags_map))
+        assert_with_message(False, can_contain_bag('vibrant plum', 'light red', containing_to_contained_bags_map))
+        assert_with_message(False, can_contain_bag('bright white', 'dotted black', containing_to_contained_bags_map))
+
+        test_input = ['light red bags contain 1 bright white bag, 2 muted yellow bags.',
+                      'dark orange bags contain 3 bright white bags, 4 muted yellow bags.',
+                      'bright white bags contain 1 shiny gold bag.',
+                      'muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.',
+                      'shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.',
+                      'dark olive bags contain 3 faded blue bags, 4 dotted black bags.',
+                      'vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.',
+                      'faded blue bags contain no other bags.',
+                      'dotted black bags contain no other bags.']
+        assert_with_message(4, get_num_containing_bags('shiny gold', test_input))
+        assert_with_message(0, get_num_containing_bags('shiny gold', get_input(7)))
         run()
