@@ -85,8 +85,8 @@ class TestStringMethods(unittest.TestCase):
                             get_containing_to_contained_bags_map([test_line, test_line_with_none]))
         containing_to_contained_bags_map = get_containing_to_contained_bags_map([test_line, test_line_with_none])
         assert_with_message(True, can_contain_bag('bright white', 'light red', containing_to_contained_bags_map))
-        # assert_with_message(False, can_contain_bag('vibrant plum', 'light red', containing_to_contained_bags_map))
-        # assert_with_message(False, can_contain_bag('bright white', 'dotted black', containing_to_contained_bags_map))
+        assert_with_message(False, can_contain_bag('vibrant plum', 'light red', containing_to_contained_bags_map))
+        assert_with_message(False, can_contain_bag('bright white', 'dotted black', containing_to_contained_bags_map))
 
         test_input = ['light red bags contain 1 bright white bag, 2 muted yellow bags.',
                       'dark orange bags contain 3 bright white bags, 4 muted yellow bags.',
