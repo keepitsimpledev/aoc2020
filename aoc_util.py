@@ -20,7 +20,6 @@ def assert_with_message(expected, actual):
     assert expected == actual, '\n\texpected: {}\n\tactual: {}'.format(expected, actual)
 
 
-# TODO: update old days where input processing was done
 def get_input(day: int):
     url = 'https://adventofcode.com/2020/day/{}/input'.format(day)
     response = requests.get(url, headers={'Cookie': __2020cookie})
