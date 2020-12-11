@@ -2,6 +2,7 @@ import unittest
 
 from aoc_util import assert_with_message
 from aoc_util import get_input
+from aoc_util import input_strings_to_ints
 
 
 def is_sum_of_previous(sum, addends):
@@ -19,10 +20,6 @@ def find_not_sum(addends, lookback):
             return addends[current_index]
         current_index += 1
     raise Exception('all sums accounted for')
-
-
-def input_strings_to_ints(strings_in):
-    return list(map(int, strings_in))
 
 
 def run():

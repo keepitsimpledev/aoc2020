@@ -24,3 +24,7 @@ def get_input(day: int):
     url = 'https://adventofcode.com/2020/day/{}/input'.format(day)
     response = requests.get(url, headers={'Cookie': __2020cookie})
     return response.content.decode().split('\n')
+
+
+def input_strings_to_ints(strings_in):
+    return list(map(int, strings_in))

@@ -3,12 +3,13 @@ import sys
 
 from aoc_util import assert_with_message
 from aoc_util import get_input
+from aoc_util import input_strings_to_ints
 
 
-def is_sum_of_previous(sum, addends):
+def is_sum_of_previous(target_sum, addends):
     for i in range(len(addends)):
         for j in range(i + 1, len(addends)):
-            if addends[i] + addends[j] == sum:
+            if addends[i] + addends[j] == target_sum:
                 return True
     return False
 
@@ -34,10 +35,6 @@ def find_addends_of_sum(addends, target_sum):
             if current_sum == target_sum:
                 return low + high
     raise Exception('all sums accounted for')
-
-
-def input_strings_to_ints(strings_in):
-    return list(map(int, strings_in))
 
 
 def run():
