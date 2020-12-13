@@ -1,11 +1,7 @@
 import unittest
-import copy
-import sys
-from math import ceil
 
 from aoc_util import assert_with_message
 from aoc_util import get_input
-from aoc_util import input_strings_to_ints
 
 
 def process_input(time_and_schedules):
@@ -17,36 +13,27 @@ def process_input(time_and_schedules):
     return schedules
 
 
-def get_consecutive_schedule_with_minimum(bus1, bus2, minimum):
-    bus1_time = int(minimum / bus1[0]) * bus1[0]
-    if bus1_time < minimum or bus1_time == 0:
-        bus1_time += bus1[0]
-    bus2_time = int(minimum / bus2[0]) * bus2[0]
-    if bus2_time < minimum or bus2_time == 0:
-        bus2_time += bus2[0]
-    gap = bus2[1] - bus1[1]
-    while bus1_time != bus2_time - gap:
-        if bus2_time - bus1_time >= gap:
-            bus1_time += bus1[0]
+def find_consecutive_schedule(bus_and_interval):
+    values = []
+    for bus in bus_and_interval:
+        values += [bus[0]]
+    current_index = 0
+    path_found = False
+    while not path_found:
+        curr_val = values[current_index]
+        next_val = bus_and_interval[current_index + 1][0]
+        next_val = int(curr_val / next_val) * next_val + next_val
+        values[current_index + 1] = next_val
+        gap = bus_and_interval[current_index + 1][1] - bus_and_interval[current_index][1]
+        if curr_val == next_val - gap:
+            if current_index == len(bus_and_interval) - 2:
+                path_found = True
+            else:
+                current_index += 1
         else:
-            bus2_time += bus2[0]
-    return [bus1_time, bus2_time]
-
-
-def get_current_and_next_schedule(bus_index, schedules, minimum):
-    if bus_index == len(schedules) - 2:
-        return get_consecutive_schedule_with_minimum(schedules[bus_index], schedules[bus_index + 1], minimum)
-    else:
-        bus_times = [minimum, minimum]
-        gap_12 = schedules[bus_index + 1][1] - schedules[bus_index][1]
-
-        while bus_times[0] != bus_times[1] - gap_12:
-            bus_times = get_consecutive_schedule_with_minimum(schedules[bus_index], schedules[bus_index + 1], minimum)
-            next_times =\
-                get_current_and_next_schedule(bus_index + 1, schedules, bus_times[1])
-            bus_times[1] = next_times[0]
-            minimum += schedules[bus_index][0]
-        return bus_times
+            values[0] += bus_and_interval[0][0]
+            current_index = 0
+    return values[0]
 
 
 def run():
@@ -59,18 +46,32 @@ class TestAoC(unittest.TestCase):
         given_input1 = ['939', '7,13,x,x,59,x,31,19']
         processed_given_input1 = process_input(given_input1)
         assert_with_message([[7, 0], [13, 1], [59, 4], [31, 6], [19, 7]], processed_given_input1)
-        assert_with_message([11, 12], get_consecutive_schedule_with_minimum([11, 0], [4, 1], 10))
-        assert_with_message([15, 16], get_consecutive_schedule_with_minimum([5, 0], [4, 1], 10))
-        assert_with_message([8, 10], get_consecutive_schedule_with_minimum([2, 0], [5, 2], 0))
-        assert_with_message([18, 20], get_consecutive_schedule_with_minimum([2, 0], [5, 2], 10))
-        assert_with_message([14, 15], get_current_and_next_schedule(0, [[7, 0], [5, 1], [4, 2]], 0))
-        assert_with_message([1, 2], get_current_and_next_schedule(0, [[1, 0], [2, 1], [3, 2]], 0))
-        assert_with_message([7, 8], get_current_and_next_schedule(0, [[1, 0], [2, 1], [3, 2]], 2))
-        assert_with_message([12, 15], get_current_and_next_schedule(0, [[2, 0], [5, 3], [6, 6]], 2))
-        assert_with_message([20, 21], get_current_and_next_schedule(0, [[5, 0], [7, 1], [11, 2]], 0))
-        assert_with_message([2, 4], get_current_and_next_schedule(0, [[2, 0], [2, 2], [2, 4]], 0))
-        assert_with_message([4, 6], get_current_and_next_schedule(0, [[2, 0], [2, 2], [2, 4]], 4))
-        assert_with_message([4, 6], get_current_and_next_schedule(0, [[2, 0], [2, 2], [2, 6]], 3))
-        assert_with_message([405, 406], get_current_and_next_schedule(0, [[5, 0], [7, 1], [11, 2]], 25))
-        # assert_with_message(1068781, get_current_and_next_schedule(0, processed_given_input1, 0))
+
+        assert_with_message(2, find_consecutive_schedule([[2, 0], [3, 1]]))
+
+        assert_with_message(11, find_consecutive_schedule([[11, 0], [4, 1]]))
+        assert_with_message(15, find_consecutive_schedule([[5, 0], [4, 1]]))
+        assert_with_message(8, find_consecutive_schedule([[2, 0], [5, 2]]))
+        assert_with_message(14, find_consecutive_schedule([[7, 0], [5, 1], [4, 2]]))
+        assert_with_message(1, find_consecutive_schedule([[1, 0], [2, 1], [3, 2]]))
+        assert_with_message(12, find_consecutive_schedule([[2, 0], [5, 3], [6, 6]]))
+        assert_with_message(20, find_consecutive_schedule([[5, 0], [7, 1], [11, 2]]))
+        assert_with_message(2, find_consecutive_schedule([[2, 0], [2, 2], [2, 4]]))
+
+        test_input1 = process_input(given_input1)
+        assert_with_message(1068781, find_consecutive_schedule(test_input1))
+        test_input2 = process_input(['', '17,x,13,19'])
+        assert_with_message(3417, find_consecutive_schedule(test_input2))
+        test_input3 = process_input(['', '67,7,59,61'])
+        assert_with_message(754018, find_consecutive_schedule(test_input3))
+        test_input4 = process_input(['', '67,x,7,59,61'])
+        assert_with_message(779210, find_consecutive_schedule(test_input4))
+        test_input5 = process_input(['', '67,7,x,59,61'])
+        assert_with_message(1261476, find_consecutive_schedule(test_input5))
+        test_input5 = process_input(['', '1789,37,47,1889'])
+        assert_with_message(1202161486, find_consecutive_schedule(test_input5))
+
+        day_input = process_input(get_input(13))
+        # assert_with_message(1202161486, find_consecutive_schedule(day_input))
+
         run()

@@ -1,11 +1,9 @@
 import unittest
-import copy
 import sys
 from math import ceil
 
 from aoc_util import assert_with_message
 from aoc_util import get_input
-from aoc_util import input_strings_to_ints
 
 
 def process_input(time_and_schedules):
